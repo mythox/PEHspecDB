@@ -25,10 +25,10 @@
     <v-toolbar app class="primary">
       <v-toolbar-side-icon dark @click="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>
-        <v-btn dark flat router to="/">{{title}}</v-btn>
+        <v-btn dark flat to="/">{{title}}</v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn dark icon router to="/signout">
+      <v-btn dark icon to="/signout">
         <v-icon>highlight_off</v-icon>
       </v-btn>
     </v-toolbar>
