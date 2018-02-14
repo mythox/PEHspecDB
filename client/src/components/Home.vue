@@ -32,11 +32,11 @@
 </template>
 
 <script>
-  import MaterialService from '@/services/MaterialService'
+  // import MaterialService from '@/services/MaterialService'
   export default {
     data () {
       return {
-        MaterialNum: "",
+        MaterialNum: '',
         plant: [{
           imageUrl: 'https://www.richardvanhooijdonk.com/wp-content/uploads/2015/11/factory-future.jpg',
           id: '1',
