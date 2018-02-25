@@ -1,10 +1,32 @@
 import Api from '@/services/Api'
+import {store} from '@/store'
 
 export default {
-  getOneSpec (spec) {
-    return Api().post('getSpec', spec)
+  getSpec (spec) {
+    return Api().get(`/getspec/${spec}`)
   },
-  getTest () {
-    return Api().get('')
+  getSpecs () {
+    return Api().get('/getspecs')
+    // .then((response) => {
+    //   store.commit('add', response.data)
+    // })
+    // .catch((err) => {
+    //   throw err
+    // })
+  },
+  getNewSpec (spec) {
+    return Api().get(`/getnewspec/${spec}`)
+  },
+  getNewSpecs () {
+    return Api().get('/getnewspecs')
+  },
+  getSpecsVuex () {
+    return Api().get('/getspecs')
+    .then((response) => {
+      store.commit('add', response.data)
+    })
+    .catch((err) => {
+      throw err
+    })
   }
 }

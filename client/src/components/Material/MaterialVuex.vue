@@ -54,14 +54,13 @@
 </template>
 
 <script>
-  import MaterialService from '@/services/MaterialService'
   // TO-DO user login, dialog for item details, print to pdf, make new rev., etc
   export default {
     data () {
       return {
         loading: false,
         headers: [
-          { text: 'Material Number', value: 'MaterialNum' },  // TO-DO server side sorting
+          { text: 'Material Number', value: 'materialNum' },  // TO-DO server side sorting
           { text: 'Description', value: 'desc', sortable: false },
           { text: 'Area Code', value: 'areaCode', sortable: false },
           { text: 'Approved By', value: 'approvedBy', sortable: false },
@@ -69,28 +68,26 @@
           { text: 'Prepared By', value: 'preparedBy', sortable: false },
           { text: 'MS Rev', value: 'msRev', sortable: false }
         ],
-        materials: [],
+        // materials: [],
         pagination: {}, // TO-DO pagnination, default 10 items per page
         totalItems: 0
       }
     },
     async mounted () {
-      this.materials = (await MaterialService.getSpecs()).data
-      // this.totalItems = this.materials.length
-      console.log(this.materials.length)
+      // this.materials = materials
     },
     methods: {
       async doSearch (query) {
         if (query.length >= 8) {
-          this.loading = true
-          this.materials = (await MaterialService.getSpec(query)).data
-          // this.totalItems = this.materials.length
-          this.loading = false
-        } else if (query.length === 0) {
-          this.loading = true
-          this.materials = (await MaterialService.getSpecs()).data
-          // this.totalItems = this.materials.length
-          this.loading = false
+        //   this.loading = true
+        //   this.materials = (await MaterialService.getSpec(query)).data
+        //   // this.totalItems = this.materials.length
+        //   this.loading = false
+        // } else if (query.length === 0) {
+        //   this.loading = true
+        //   this.materials = (await MaterialService.getSpecs()).data
+        //   // this.totalItems = this.materials.length
+        //   this.loading = false
         }
       }
     },
@@ -100,10 +97,10 @@
           this.pagination.totalItems == null
         ) return 0
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      },
+      materials () {
+        return this.$store.getters.loadedMaterials
       }
     }
-    //   materials () {
-    //     return this.$store.getters.loadedMaterials
-    //   }
   }
 </script>

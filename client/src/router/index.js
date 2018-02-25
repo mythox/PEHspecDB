@@ -5,6 +5,7 @@ import Material from '@/components/Material/Material'
 import NewMaterial from '@/components/Material/NewMaterial'
 import Signin from '@/components/User/Signin'
 import Signout from '@/components/User/Signout'
+import MaterialVuex from '@/components/Material/MaterialVuex'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/signout',
       name: 'Signout',
       component: Signout
+    },
+    {
+      path: '/materialvuex',
+      name: 'MaterialVuex',
+      component: MaterialVuex
     }
   ],
   mode: 'history'

@@ -1,31 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import MaterialService from '@/services/MaterialService'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    loadedMaterials: [
-      {
-        materialNum: '1B-39266H',
-        preparedBy: 'aisha',
-        description: '0.508 x 58',
-        businessUnit: 'P'
-      },
-      {
-        materialNum: '1A-65487H',
-        preparedBy: 'peter',
-        description: '0.311 x 74',
-        businessUnit: 'A'
-      }
-    ]
+    loadedMaterials: null,
+    isUpdated: 'true'
   },
-  mutations: {},
+  mutations: {
+    add (state, payload) {
+      state.loadedMaterials = payload
+      console.log('material ready')
+    },
+    isUpdated (state, payload) {
+      state.isUpdated = payload
+    }
+  },
   actions: {},
   getters: {
     loadedMaterials (state) {
-      return state.loadedMaterials
+      return state.loadedMaterials.sort((materialA, materialB) => {
+        return materialA.MaterialNum < materialB.MaterialNum
+      })
+    },
+    slicedMaterials (state, getters) {
+      return getters.loadedMaterials.slice(0, 5)
     },
     loadedMaterial (state) {
       return (materialId) => {
@@ -33,6 +33,9 @@ export const store = new Vuex.Store({
           return material.MaterialNum === materialId
         })
       }
+    },
+    isUpdated (state) {
+      return state.isUpdated
     }
   }
 })
