@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Dashboard from '@/components/User/Dashboard'
 import Material from '@/components/Material/Material'
 import NewMaterial from '@/components/Material/NewMaterial'
+import MaterialSpec from '@/components/Material/MaterialSpec'
 import Signin from '@/components/User/Signin'
-import Signout from '@/components/User/Signout'
-import MaterialVuex from '@/components/Material/MaterialVuex'
+import Register from '@/components/User/Register'
 
 Vue.use(Router)
 
@@ -15,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/material',
@@ -27,19 +33,19 @@ export default new Router({
       component: NewMaterial
     },
     {
+      path: '/materialspec',
+      name: 'MaterialSpec',
+      component: MaterialSpec
+    },
+    {
       path: '/signin',
       name: 'Signin',
       component: Signin
     },
     {
-      path: '/signout',
-      name: 'Signout',
-      component: Signout
-    },
-    {
-      path: '/materialvuex',
-      name: 'MaterialVuex',
-      component: MaterialVuex
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ],
   mode: 'history'

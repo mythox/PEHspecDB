@@ -1,32 +1,31 @@
 import Api from '@/services/Api'
-import {store} from '@/store'
 
 export default {
-  getSpec (spec) {
-    return Api().get(`/getspec/${spec}`)
+  getSpec (search) {
+    return Api().get(`/getspec/${search}`)
   },
   getSpecs () {
     return Api().get('/getspecs')
-    // .then((response) => {
-    //   store.commit('add', response.data)
-    // })
-    // .catch((err) => {
-    //   throw err
-    // })
   },
-  getNewSpec (spec) {
-    return Api().get(`/getnewspec/${spec}`)
+  getNewSpec (search) {
+    return Api().get(`/getnewspec/${search}`)
   },
   getNewSpecs () {
     return Api().get('/getnewspecs')
   },
-  getSpecsVuex () {
-    return Api().get('/getspecs')
-    .then((response) => {
-      store.commit('add', response.data)
-    })
-    .catch((err) => {
-      throw err
-    })
+  getAlloyCat (search) {
+    return Api().get(`/getalloycat/${search}`)
+  },
+  getAlloyCode (search) {
+    return Api().get(`/getalloycode/${search}`)
+  },
+  getHardness (search) {
+    return Api().get(`/gethardness/${search}`)
+  },
+  getDimension (search) {
+    return Api().get(`/getdimension/${search}`)
+  },
+  getLength (search) {
+    return Api().get(`/getlength/${search}`)
   }
 }

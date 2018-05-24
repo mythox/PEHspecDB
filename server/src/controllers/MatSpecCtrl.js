@@ -1,39 +1,61 @@
-const config = require('../config/config')
-const db = require('../models/db')
+const {Material, WkMaterial} = require('../models')
 
 module.exports = {
-  frontpage (req, res) {
-    res.send({
-      Contact: "Steven Tse",
-      Number: "2942 0532"
-    })
+  async index (req, res) {
+    try {
+      let materials = null
+      const search = req.params.name
+      if (search) {
+        materials = await Material.findAll({
+          where: {
+            $or: [
+              'MaterialNum', 'AreaCode'
+            ].map(key => ({
+              [key]: {
+                $like: `%${search}%`
+              }
+            }))
+          }
+        })
+      } else {
+        materials = await Material.findAll({
+          limit: 5000
+        })
+      }
+      res.send(materials)
+    } catch (err) {
+      res.status(500).send({
+        error: 'an error has occured trying to fetch the materials'
+      })
+    }
   },
-  async listAllSpec (req, res) {
-    let sql = 'SELECT * FROM materials ORDER BY materialnum'
-    let query = await db.query(sql, (err, result) => {
-        if(err) throw err
-        res.send(result)
-    })
-  },
-  async listOneSpec (req, res) {
-    let sql = `SELECT * FROM materials WHERE materialnum = '${req.params.name}' ORDER BY materialnum`
-    let query = await db.query(sql, (err, result) => {
-      if (err) throw err
-      res.send(result)
-    })
-  },
-  async listAllNewSpec (req, res) {
-    let sql = 'SELECT * FROM wkmaterials ORDER BY materialnum'
-    let query = await db.query(sql, (err, result) => {
-        if(err) throw err
-        res.send(result)
-    })
-  },
-  async listOneNewSpec (req, res) {
-    let sql = `SELECT * FROM wkmaterials WHERE materialnum = '${req.params.name}' ORDER BY materialnum`
-    let query = await db.query(sql, (err, result) => {
-      if (err) throw err
-      res.send(result)
-    })
+
+  async wkindex (req, res) {
+    try {
+      let wkmaterials = null
+      const search = req.params.name
+      if (search) {
+        wkmaterials = await WkMaterial.findAll({
+          where: {
+            $or: [
+              'MaterialNum', 'AreaCode'
+            ].map(key => ({
+              [key]: {
+                $like: `%${search}%`
+              }
+            }))
+          }
+        })
+      } else {
+        wkmaterials = await WkMaterial.findAll({
+          limit: 5000
+        })
+      }
+      res.send(wkmaterials)
+    } catch (err) {
+      res.status(500).send({
+        error: 'an error has occured trying to fetch the materials'
+      })
+    }
   }
 }

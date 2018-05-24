@@ -1,14 +1,14 @@
 <template>
   <v-container>
-    <v-layout row wrap class="mb-3">
+    <v-layout row wrap class="mb-3" v-if="$store.state.isUserLoggedIn">
       <v-flex sm12>
         <v-card>
           <v-card-title>
-            <h3>Material Spec</h3>
+            <h3>Material Specification</h3>
             <v-spacer></v-spacer>
             <v-text-field 
               append-icon="search"
-              label="Search by Material Number"
+              label="Search by Material Number, Area Code"
               single-line
               hide-details
               @input="value => doSearch(value)"
@@ -17,22 +17,20 @@
           <v-data-table
             :headers="headers"
             :items="materials"
+            :rows-per-page-items="rowsPerPageItems"
             :pagination.sync="pagination"
-            :total-items="totalItems"
             :loading = "loading"
           >
-            <template slot="headerCell" slot-scope="props">
-              <v-tooltip bottom>
-                <span slot="activator">
-                  {{ props.header.text }}
-                </span>
-                <span>
-                  {{ props.header.text }}
-                </span>
-              </v-tooltip>
-            </template>
             <template slot="items" slot-scope="props">
-              <td class="text-xs-left">{{props.item.MaterialNum}}</td>
+              <td class="text-xs-left">
+                <v-btn 
+                  depressed flat small
+                  :to="{
+                    name: 'MaterialSpec', 
+                    params: {
+                      spec: props.item.MaterialNum
+                    }
+                }">{{props.item.MaterialNum}}</v-btn></td>
               <td class="text-xs-left">{{props.item.Description}}</td>
               <td class="text-xs-left">{{props.item.AreaCode}}</td>
               <td class="text-xs-left">{{props.item.ApprovedBy}}</td>
@@ -40,14 +38,14 @@
               <td class="text-xs-left">{{props.item.PreparedBy}}</td>
               <td class="text-xs-left">{{props.item.MSRev}}</td>
             </template>
-            <div class="text-xs-center pt-2">
-              <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-            </div>
-            <!-- <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                Your search for "{{ search }}" found no results.
-            </v-alert> -->
           </v-data-table>
         </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout v-if="!$store.state.isUserLoggedIn">
+      <v-flex xs12 class="text-xs-center">
+        <h3>Material Online System - Possehl Electronics</h3>
+        <p>Please <a href="/signin">login</a> for more</p>
       </v-flex>
     </v-layout>
   </v-container>
@@ -61,7 +59,7 @@
       return {
         loading: false,
         headers: [
-          { text: 'Material Number', value: 'MaterialNum' },  // TO-DO server side sorting
+          { text: 'Material Number', value: 'MaterialNum' },
           { text: 'Description', value: 'desc', sortable: false },
           { text: 'Area Code', value: 'areaCode', sortable: false },
           { text: 'Approved By', value: 'approvedBy', sortable: false },
@@ -70,40 +68,28 @@
           { text: 'MS Rev', value: 'msRev', sortable: false }
         ],
         materials: [],
-        pagination: {}, // TO-DO pagnination, default 10 items per page
-        totalItems: 0
+        pagination: {},
+        rowsPerPageItems: [10, 25, {'text': 'All', 'value': -1}]
       }
     },
     async mounted () {
+      this.loading = true
       this.materials = (await MaterialService.getSpecs()).data
-      // this.totalItems = this.materials.length
-      console.log(this.materials.length)
+      this.loading = false
     },
     methods: {
-      async doSearch (query) {
-        if (query.length >= 8) {
+      async doSearch (value) {
+        if (value.length >= 3) {
           this.loading = true
-          this.materials = (await MaterialService.getSpec(query)).data
-          // this.totalItems = this.materials.length
+          this.materials = (await MaterialService.getSpec(value)).data
+          this.pagination.page = 1
           this.loading = false
-        } else if (query.length === 0) {
+        } else if (value.length === 0) {
           this.loading = true
           this.materials = (await MaterialService.getSpecs()).data
-          // this.totalItems = this.materials.length
           this.loading = false
         }
       }
-    },
-    computed: {
-      pages () {
-        if (this.pagination.rowsPerPage == null ||
-          this.pagination.totalItems == null
-        ) return 0
-        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
     }
-    //   materials () {
-    //     return this.$store.getters.loadedMaterials
-    //   }
   }
 </script>
