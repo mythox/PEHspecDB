@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const AlloyCode = sequelize.define('AlloyCode', {
-    AlloyCode: {
+    AlloyCodeId: {
       type: DataTypes.STRING,
       unique: true,
       primaryKey: true

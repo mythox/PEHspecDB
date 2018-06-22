@@ -1,13 +1,8 @@
 const MatSpecCtrl = require('./controllers/MatSpecCtrl')
 const AuthCtrl = require('./controllers/AuthCtrl')
 const AuthCtrlPolicies = require('./policies/AuthCtrlPolicies')
-const AlloyCatCtrl = require('./controllers/AlloyCatCtrl')
-const AlloyCodeCtrl = require('./controllers/AlloyCodeCtrl')
-const HardnessCtrl = require('./controllers/HardnessCtrl')
-const DimensionCtrl = require('./controllers/DimensionCtrl')
-const LengthCtrl = require('./controllers/LengthCtrl')
 const MatPropCtrl = require('./controllers/MatPropCtrl')
-const MsPropCtrl = require('./controllers/MsPropCtrl')
+const MatAreaCtrl = require('./controllers/MatAreaCtrl')
 
 module.exports = (app) => {
   app.get('/getspecs', MatSpecCtrl.index)
@@ -16,11 +11,6 @@ module.exports = (app) => {
   app.get('/getnewspec/:name', MatSpecCtrl.wkindex)
   app.post('/register', AuthCtrlPolicies.register, AuthCtrl.register)
   app.post('/login', AuthCtrl.login)
-  app.get('/getalloycat/:name', AlloyCatCtrl.index)
-  app.get('/getalloycode/:name', AlloyCodeCtrl.index)
-  app.get('/gethardness/:name', HardnessCtrl.index)
-  app.get('/getdimension/:name', DimensionCtrl.index)
-  app.get('/getlength/:name', LengthCtrl.index)
   app.get('/getmatprop/:name', MatPropCtrl.index)
-  app.get('/getmsprop/:name', MsPropCtrl.index)
+  app.get('/getmatarea/:name', MatAreaCtrl.index)
 }

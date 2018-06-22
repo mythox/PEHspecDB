@@ -140,8 +140,8 @@
           <v-card-text>lets stay and work more</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat="flat" @click.native="dialog_signout = false" @click="logout">Yes</v-btn>
-            <v-btn color="green darken-1" flat="flat" @click.native="dialog_signout = false">No</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native="dialog_signout = false" @click="logout">Logout</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native="dialog_signout = false">Stay</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

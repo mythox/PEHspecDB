@@ -1,4 +1,5 @@
 const {MsProp} = require('../models')
+const {Op} = require('sequelize')
 
 module.exports = {
   async index (req, res) {
@@ -8,13 +9,9 @@ module.exports = {
       if (search) {
         msProp = await MsProp.findAll({
           where: {
-            $or: [
-              'MSType'
-            ].map(key => ({
-              [key]: {
-                $eq: `${search}`
-              }
-            }))
+            MsType: {
+              [Op.or]: [search]
+            }
           }
         })
       } else {

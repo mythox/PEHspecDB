@@ -3,7 +3,20 @@ module.exports = (sequelize, DataTypes) => {
     MaterialNum: {
       type: DataTypes.STRING,
       unique: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false,
+      validation: {
+        len: {  // standard valication rule
+          arg: [8-15],
+          msg: 'Material Number must be between 8 - 15 characters'
+        },
+        startsWithNumber: function (bodyVal) { // custom valication rule
+          let first = bodyVal.charAt(0)
+          if (!(first === first.isInteger())) {
+            throw new Error ('First letter must be numeric')
+          }
+        }
+      }
     },
     PreparedBy: {
       type: DataTypes.STRING,

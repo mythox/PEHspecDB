@@ -1,4 +1,4 @@
-const {MatProp} = require('../models')
+const {MatProp, MsProp, MsType, Procurespecitem, Procurespecdoc} = require('../models')
 
 module.exports = {
   async index (req, res) {
@@ -8,14 +8,28 @@ module.exports = {
       if (search) {
         matProp = await MatProp.findAll({
           where: {
-            $or: [
-              'MaterialNum'
-            ].map(key => ({
-              [key]: {
-                $eq: `${search}`
-              }
-            }))
-          }
+            MaterialNum: {
+              $eq: [search]
+            }
+          },
+          attributes: ['RefNum', 'OptionNum'],
+          include: [{
+            model: MsProp,
+            as: 'Prop',
+            attributes: ['MSPropDesc'],
+          },{
+            model: MsType,
+            as: 'Type',
+            attributes: ['MSTitle'],
+          },{
+            model: Procurespecitem,
+            as: 'SpecItem',
+            attributes: ['MsrUnit', 'MinVal', 'MaxVal', 'Remark', 'Exception']
+          },{
+            model: Procurespecdoc,
+            as: 'SpecDoc',
+            attributes: ['DocContent']
+          }]
         })
       } else {
         matProp = await MatProp.findAll({

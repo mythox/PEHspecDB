@@ -10,6 +10,7 @@
               append-icon="search"
               label="Search by Material Number, Area Code"
               single-line
+              autofocus
               hide-details
               @input="value => doSearch(value)"
             ></v-text-field>
@@ -60,12 +61,12 @@
         loading: false,
         headers: [
           { text: 'Material Number', value: 'MaterialNum' },
-          { text: 'Description', value: 'desc', sortable: false },
-          { text: 'Area Code', value: 'areaCode', sortable: false },
-          { text: 'Approved By', value: 'approvedBy', sortable: false },
-          { text: 'Business Unit', value: 'businessUnit', sortable: false },
-          { text: 'Prepared By', value: 'preparedBy', sortable: false },
-          { text: 'MS Rev', value: 'msRev', sortable: false }
+          { text: 'Description', sortable: false },
+          { text: 'Area Code', sortable: false },
+          { text: 'Approved By', sortable: false },
+          { text: 'Business Unit', sortable: false },
+          { text: 'Prepared By', sortable: false },
+          { text: 'MS Rev', sortable: false }
         ],
         materials: [],
         pagination: {},

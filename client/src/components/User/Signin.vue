@@ -6,6 +6,7 @@
           <v-text-field
             label="Email"
             v-model="email"
+            autofocus
           ></v-text-field>
           <v-text-field
             label="Password"

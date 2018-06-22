@@ -13,19 +13,10 @@ export default {
   getNewSpecs () {
     return Api().get('/getnewspecs')
   },
-  getAlloyCat (search) {
-    return Api().get(`/getalloycat/${search}`)
+  getMatProp (search) {
+    return Api().get(`/getmatprop/${search}`)
   },
-  getAlloyCode (search) {
-    return Api().get(`/getalloycode/${search}`)
-  },
-  getHardness (search) {
-    return Api().get(`/gethardness/${search}`)
-  },
-  getDimension (search) {
-    return Api().get(`/getdimension/${search}`)
-  },
-  getLength (search) {
-    return Api().get(`/getlength/${search}`)
+  getMatArea (search) {
+    return Api().get(`/getmatarea/${search}`)
   }
 }

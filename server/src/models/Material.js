@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     Description: DataTypes.STRING,
     BusinessUnit: DataTypes.STRING,
-    AlloyCode: {
+    AlloyCodeId: {
       type: DataTypes.STRING,
       required: true
     },
@@ -36,9 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     ToleLneg: DataTypes.STRING,
     Options: DataTypes.STRING,
     CustMatNum: DataTypes.STRING,
-    AlloyCat: {
+    AlloyCatId: {
       type: DataTypes.STRING,
-      required: true
+      required: true,
     },
     RevRemarks: DataTypes.TEXT,
     PreparedDate: {
@@ -61,6 +61,21 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Material.associate = function (models) {
+    Material.belongsTo(models.AlloyCat, {
+      foreignKey: 'AlloyCatId'
+    }),
+    Material.belongsTo(models.AlloyCode, {
+      foreignKey: 'AlloyCodeId'
+    }),
+    Material.belongsTo(models.Hardness, {
+      foreignKey: 'HardnessCode'
+    }),
+    Material.belongsTo(models.Dimension, {
+      foreignKey: 'DimensionNum'
+    }),
+    Material.belongsTo(models.Length, {
+      foreignKey: 'LengthCode'
+    })
   }
 
   return Material

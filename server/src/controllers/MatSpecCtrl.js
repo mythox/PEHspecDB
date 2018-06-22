@@ -1,4 +1,5 @@
-const {Material, WkMaterial} = require('../models')
+const {Material, WkMaterial, AlloyCat, AlloyCode, Hardness, Dimension, Length} = require('../models')
+const {Op} = require('sequelize')
 
 module.exports = {
   async index (req, res) {
@@ -8,14 +9,31 @@ module.exports = {
       if (search) {
         materials = await Material.findAll({
           where: {
-            $or: [
-              'MaterialNum', 'AreaCode'
-            ].map(key => ({
-              [key]: {
-                $like: `%${search}%`
-              }
-            }))
-          }
+            [Op.or]: [{
+              MaterialNum: {
+                [Op.like]: `%${search}%`
+              }}, {
+              AreaCode: {
+                [Op.like]: `%${search}%`
+              }}
+            ]
+          },
+          include: [{
+            model: AlloyCat,
+            attributes: ['AlloyCatDesc']
+          },{
+            model: AlloyCode,
+            attributes: ['AlloyStandardName']
+          },{
+            model: Hardness,
+            attributes: ['Hardness']
+          },{
+            model: Dimension,
+            attributes: ['Thickness', 'Width']
+          },{
+            model: Length,
+            attributes: ['Length', 'LengthOrPlating']
+          }]
         })
       } else {
         materials = await Material.findAll({
@@ -37,13 +55,14 @@ module.exports = {
       if (search) {
         wkmaterials = await WkMaterial.findAll({
           where: {
-            $or: [
-              'MaterialNum', 'AreaCode'
-            ].map(key => ({
-              [key]: {
-                $like: `%${search}%`
-              }
-            }))
+            [Op.or]: [{
+              MaterialNum: {
+                [Op.like]: `%${search}%`
+              }}, {
+              AreaCode: {
+                [Op.like]: `%${search}%`
+              }}
+            ]
           }
         })
       } else {
