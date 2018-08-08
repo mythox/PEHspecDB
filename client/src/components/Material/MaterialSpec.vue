@@ -143,9 +143,9 @@
 
         const [fulldate, timestamp] = date.split('T')
         const [year, month, day] = fulldate.split('-')
-        const [time, stamp] = timestamp.split('.')
+        const time = timestamp.split('.').slice(0, 1)
 
-        if (time === '00:00:00.000Z') {
+        if (time === '00:00:00') {
           return `${day}/${month}/${year}`
         } else {
           return `${day}/${month}/${year} ${time}`
